@@ -28,11 +28,11 @@ router.get('/', async(req, res, next)=>{
   }
 
 });
-router.get('/model/:name', async(req, res, next)=>{
+router.get('/model/:id', async(req, res, next)=>{
   const client = await MongoClient.connect(dbUrl)
   try {
     const db = await client.db(dbName)
-    let model = await db.collection('model').find({Name:req.params.name}).toArray()
+    let model = await db.collection('model').find({_id:mongodb.ObjectId(req.params.id)}).toArray()
     if(model){
       res.json({
         statusCode:200,
@@ -60,8 +60,6 @@ router.get('/model/:name', async(req, res, next)=>{
   }
 
 });
-
-
 
 router.get('/user', async(req, res, next)=>{
   const client = await MongoClient.connect(dbUrl)
@@ -97,7 +95,6 @@ router.post('/addmodel',async(req, res)=>{
 
   try {
     const db = await client.db(dbName)
-    
       const model =await db.collection('model').insertOne(req.body)
       res.json({
         statusCode:200,
@@ -122,26 +119,17 @@ client.close()
 
 
 // Put Request with ID
-router.put('/edit-model',async(req, res)=>{
+router.put('/edit-model/:id',async(req, res)=>{
   const client = await MongoClient.connect(dbUrl)
 
   try {
     const db = await client.db(dbName)
     
-    let business = await db.collection('model').findOneAndReplace({Name:req.body.Name},req.body
-    //   {
-    //     businessName:req.body.businessName,
-    //     email:req.body.email,
-    //     mobile:req.body.mobile,
-    //     address:req.body.address,
-    //     city:req.body.city,
-    //     state:req.body.state,
-    //     Zipcode:req.body.Zipcode,
-    // }
+    let model = await db.collection('model').findOneAndReplace({_id:mongodb.ObjectId(req.params.id)},req.body
     )
     res.json({
       statusCode:200,
-      message:"Name Edited Successfully"
+      message:"Model Edited Successfully"
     })
     
    
