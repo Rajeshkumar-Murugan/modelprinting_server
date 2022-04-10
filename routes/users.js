@@ -61,12 +61,15 @@ router.post('/register', async(req, res, next)=> {
         to: account.email,
         subject: 'Verification token',
         html: ` 
-          <form action="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="POST">
-          <input type="submit" name="Click here" value="Click here"> to verify your email ID
-          </form>
+        
+        <form action="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="POST">
+           <input type="submit" name="Click here" value="Click here"/> to verify your email ID
+            </form>
         `                
       };
       
+
+
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
@@ -138,14 +141,14 @@ router.post('/verify-token/:token', async(req, res)=>{
             <img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
             </center>
             <h4>Email Verification<h4><br>
-     <p> Email verified successfully. Please <a href="https://priceless-ritchie-d27cd9.netlify.app/">Click here</a> to login</p>`);
+     <p> Email verified successfully. Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click here</a> to login</p>`);
     }
   else{
     res.send(`
             <center>
-            <img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
+            <img src='https://cdn.dribbble.com/users/280033/screenshots/1481262/timeout_anim.gif' alt='logo'/>
             </center>
-            <h4>Token Expired successfully<h4>
+            <h4>Token Expired Please generate new<h4>
   `);
   }
     
@@ -173,7 +176,7 @@ router.post('/forget-password', async(req, res)=>{
           subject: 'Password Reset Mail',
           html: ` 
           <center>
-            <img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
+            <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
             </center>
             <h4>Password Reset Link<h4><br>
             <p> Please click confirm button to set new password</p><br>
@@ -308,7 +311,7 @@ router.post('/forget-password/link/:key', async(req, res)=>{
 <body>
 <form action="http://localhost:4000/users/forget-password/update/${keys}", method="POST" style="max-width:500px;margin:auto">
 <center>
-<img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
+<img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
 </center>
   <!-- Title  -->
   <center>
@@ -338,7 +341,7 @@ router.post('/forget-password/link/:key', async(req, res)=>{
   else{
     res.send(`
     <center>
-    <img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
+    <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
     </center>
     <p> Link is invalid, Please click on forget password again to generate new link</p>`)
   }
@@ -368,14 +371,14 @@ router.post('/forget-password/update/:key', async(req, res)=>{
         let Verified = await db.collection('auth').updateOne({email:keycheck.email},{$set:{password:hash}})
         res.send(`
         <center>
-        <img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
+        <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
         </center>
-        <p>Password updated Successfully, Please <a href="https://priceless-ritchie-d27cd9.netlify.app/">Click Here</a> to login</p>`)                   
+        <p>Password updated Successfully, Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click Here</a> to login</p>`)                   
   }
   else{
         res.send(`
         <center>
-        <img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
+        <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
         </center>
         Key is invalid, please click forget password link again to generate new key
         `)
