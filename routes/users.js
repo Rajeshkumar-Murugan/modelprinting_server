@@ -1,5 +1,7 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
+const axios = require('axios');
+
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -56,19 +58,21 @@ router.post('/register', async(req, res, next)=> {
       let document = await db.collection('auth').insertOne(account);
       const token = await createJWT({email:req.body.email})
       
+      
+
       var mailOptions = {
         from: 'testingforweb01@gmail.com',
         to: account.email,
         subject: 'Verification token',
-        html: ` 
-        
-        <form action="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="POST">
-           <input type="submit" name="Click here" value="Click here"/> to verify your email ID
-            </form>
+        html: `
+       <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
+       <b>Note: <b><p>Link will be valid only for 5mins</p>
         `                
       };
       
-
+      // <form action="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="POST">
+      //   <button type="submit" name="Click here" value="Click here" class="btn-link">Click Here</button> to verify your email ID
+      //    </form>
 
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -126,7 +130,7 @@ router.post('/login', async(req, res)=>{
   }
 })
 
-router.post('/verify-token/:token', async(req, res)=>{
+router.get('/verify-token/:token', async(req, res)=>{
   const client = await MongoClient.connect(dbUrl)
 
   try {
@@ -138,10 +142,13 @@ router.post('/verify-token/:token', async(req, res)=>{
       const user = await db.collection('auth').updateOne({email:validity.email},{$set:{verify:'Y'}})
       res.send(`
       <center>
-            <img src='https://image.apktoy.com/img/2c/com.bt.bms/icon.png' alt='logo'/>
-            </center>
+            <img src='https://cdn.dribbble.com/users/280033/screenshots/1481262/timeout_anim.gif' alt='logo'/>
+            
             <h4>Email Verification<h4><br>
-     <p> Email verified successfully. Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click here</a> to login</p>`);
+     <p> Email verified successfully. Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click here</a> to login</p>
+     </center>
+     `);
+    
     }
   else{
     res.send(`
@@ -179,12 +186,13 @@ router.post('/forget-password', async(req, res)=>{
             <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
             </center>
             <h4>Password Reset Link<h4><br>
-            <p> Please click confirm button to set new password</p><br>
-            <form action="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="POST">           
-            <input type="submit" name="Confirm" value="Confirm">
-            </form>
+            <p> Please click 
+            <a href ="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="get">Confirm</a>to set new password</p><br>
           ` };
         
+          // <form action="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="POST">           
+          //   <input type="submit" name="Confirm" value="Confirm">
+          //   </form>
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
@@ -214,7 +222,7 @@ router.post('/forget-password', async(req, res)=>{
   }
 })
 
-router.post('/forget-password/link/:key', async(req, res)=>{
+router.get('/forget-password/link/:key', async(req, res)=>{
   const client = await MongoClient.connect(dbUrl)
 
   try {
