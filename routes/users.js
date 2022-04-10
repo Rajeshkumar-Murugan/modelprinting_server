@@ -180,7 +180,7 @@ router.post('/forget-password', async(req, res)=>{
             </center>
             <h4>Password Reset Link<h4><br>
             <p> Please click confirm button to set new password</p><br>
-            <form action="http://localhost:4000/users/forget-password/link/${keyvalue}" method="POST">           
+            <form action="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="POST">           
             <input type="submit" name="Confirm" value="Confirm">
             </form>
           ` };
@@ -309,7 +309,7 @@ router.post('/forget-password/link/:key', async(req, res)=>{
     </script>
 </head>
 <body>
-<form action="http://localhost:4000/users/forget-password/update/${keys}", method="POST" style="max-width:500px;margin:auto">
+<form action="https://modelprintingserver.herokuapp.com/users/forget-password/update/${keys}", method="POST" style="max-width:500px;margin:auto">
 <center>
 <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
 </center>
