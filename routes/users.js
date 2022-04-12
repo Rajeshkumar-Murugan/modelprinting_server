@@ -142,7 +142,7 @@ router.get('/verify-token/:token', async(req, res)=>{
       const user = await db.collection('auth').updateOne({email:validity.email},{$set:{verify:'Y'}})
       res.send(`
       <center>
-            <img src='https://cdn.dribbble.com/users/280033/screenshots/1481262/timeout_anim.gif' alt='logo'/>
+            <img src='https://cdn.dribbble.com/users/2185205/screenshots/7886140/02-lottie-tick-01-instant-2.gif' alt='logo'/>
             
             <h4>Email Verification<h4><br>
      <p> Email verified successfully. Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click here</a> to login</p>
@@ -190,9 +190,7 @@ router.post('/forget-password', async(req, res)=>{
             <a href ="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="get">Confirm</a>to set new password</p><br>
           ` };
         
-          // <form action="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="POST">           
-          //   <input type="submit" name="Confirm" value="Confirm">
-          //   </form>
+          
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
@@ -349,7 +347,7 @@ router.get('/forget-password/link/:key', async(req, res)=>{
   else{
     res.send(`
     <center>
-    <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
+    <img src='https://cdn.dribbble.com/users/251873/screenshots/9388228/error-img.gif' alt='logo'/>
     </center>
     <p> Link is invalid, Please click on forget password again to generate new link</p>`)
   }
