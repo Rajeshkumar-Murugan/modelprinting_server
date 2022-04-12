@@ -65,7 +65,8 @@ router.post('/register', async(req, res, next)=> {
         to: account.email,
         subject: 'Verification token',
         html: `
-        <img src="https://cdn.dribbble.com/users/1238709/screenshots/4069900/success_celebration_800x600.gif">
+        
+        <img src="https://cdn.dribbble.com/users/1238709/screenshots/4069900/success_celebration_800x600.gif"><br/>
        <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
        <b>Note: <b><p>Link will be valid only for 5mins</p>
         `                
