@@ -65,14 +65,14 @@ router.post('/register', async(req, res, next)=> {
         to: account.email,
         subject: 'Verification token',
         html: `
+        <img src="https://cdn.dribbble.com/users/1238709/screenshots/4069900/success_celebration_800x600.gif">
+
        <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
        <b>Note: <b><p>Link will be valid only for 5mins</p>
         `                
       };
       
-      // <form action="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="POST">
-      //   <button type="submit" name="Click here" value="Click here" class="btn-link">Click Here</button> to verify your email ID
-      //    </form>
+
 
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
