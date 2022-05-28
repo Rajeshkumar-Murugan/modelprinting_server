@@ -85,10 +85,6 @@ router.get('/user', async(req, res, next)=>{
 
 });
 
-//Get Movies data
-
-
-// Get Request with ID
 
 router.post('/addmodel',async(req, res)=>{
   const client = await MongoClient.connect(dbUrl)
