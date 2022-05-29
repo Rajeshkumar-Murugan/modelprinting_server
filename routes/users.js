@@ -1,6 +1,5 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-const axios = require('axios');
 
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
@@ -38,10 +37,42 @@ router.post('/register', async(req, res, next)=> {
     const db =await client.db(dbName);
     let user = await db.collection('auth').findOne({email:req.body.email})
     if(user){
-      res.json({
-        message:"User already exist/Account is not activated"
-        
+      if(user.verify == 'N'){
+         res.json({
+        message:"Account is not activated. Please check your mail to verify your account",
       })
+
+        const token = await createJWT({email:req.body.email})
+      
+        console.log("Token"+token)
+
+      var mailOptions = {
+        from: 'testingforweb01@gmail.com',
+        to: user.email,
+        subject: 'Verification token',
+        html: `
+
+        <img src="https://cdn.dribbble.com/users/1238709/screenshots/4069900/success_celebration_800x600.gif"><br/>
+       <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
+       <br/>
+       <b>Note: <b><p>Link will be valid only for 5mins</p>
+        `                
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+
+      });   
+      }
+      else{
+        res.json({
+          message:"User already exist" 
+        })
+      }
     }
     else{
       const hash = await hashing(req.body.password);
@@ -103,22 +134,55 @@ router.post('/login', async(req, res)=>{
     const db =await client.db(dbName);
     let user = await db.collection('auth').findOne({email:req.body.email})
 // check if user is available
-    if(user && user.verify == 'Y'){
-      const compare = await hashcompare(req.body.password,user.password);
-      if(compare===true){
-        res.json({
-          message:"Login successfully",
-          data:user
-        })}
+    if(user){
+      if(user.verify == 'Y'){
+        const compare = await hashcompare(req.body.password,user.password);
+        if(compare===true){
+          res.json({
+            message:"Login successfully",
+            data:user
+          })}
+        else{
+          res.json({
+            message:"Invalid password"
+          })
+          }
+      }
       else{
         res.json({
-          message:"Invalid password"
+          message:"Account is not activated. Please check your mail to verify your account",
         })
-        }
+  
+          const token = await createJWT({email:req.body.email})
+        
+          console.log("Token"+token)
+  
+        var mailOptions = {
+          from: 'testingforweb01@gmail.com',
+          to: user.email,
+          subject: 'Verification token',
+          html: `
+  
+          <img src="https://cdn.dribbble.com/users/1238709/screenshots/4069900/success_celebration_800x600.gif"><br/>
+         <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
+         <br/>
+         <b>Note: <b><p>Link will be valid only for 5mins</p>
+          `                
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+  
+        });
+      }
       }
         else{
           res.json({
-            message:"User doesnot exist/Account Not verified"
+            message:"User doesnot exist"
           })
           }
 
