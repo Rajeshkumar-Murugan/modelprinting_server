@@ -166,7 +166,7 @@ router.post('/login', async(req, res)=>{
           <img src="https://cdn.dribbble.com/users/1303437/screenshots/3690039/verify_400x300.gif"><br/>
          <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
          <br/>
-         <b>Note: </b><p>Link will be valid only for 5mins</p>
+         <p><b>Note: </b>Link will be valid only for 5mins</p>
          </center>
           `                
         };
@@ -210,7 +210,6 @@ router.get('/verify-token/:token', async(req, res)=>{
       <center>
             <img src='https://cdn.dribbble.com/users/2185205/screenshots/7886140/02-lottie-tick-01-instant-2.gif' alt='logo'/>
             
-            <h4>Email Verification<h4><br>
      <p> Email verified successfully. Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click here</a> to login</p>
      </center>
      `);
@@ -219,9 +218,10 @@ router.get('/verify-token/:token', async(req, res)=>{
   else{
     res.send(`
             <center>
-            <img src='https://cdn.dribbble.com/users/280033/screenshots/1481262/timeout_anim.gif' alt='logo'/>
+            <img src='http://csshint.com/wp-content/uploads/2021/09/HTTP-408-Error-Page-Design.gif' alt='logo'/>
+            
+            <h4>Token Expired Please generate new token<h4>
             </center>
-            <h4>Token Expired Please generate new<h4>
   `);
   }
     
@@ -250,10 +250,11 @@ router.post('/forget-password', async(req, res)=>{
           html: ` 
           <center>
             <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
+           
+            
+            <p> Please  
+            <a href ="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="get">Click Here</a> to set new password</p><br>
             </center>
-            <h4>Password Reset Link<h4><br>
-            <p> Please click 
-            <a href ="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="get">Confirm</a>to set new password</p><br>
           ` };
         
           
@@ -443,14 +444,16 @@ router.post('/forget-password/update/:key', async(req, res)=>{
         let Verified = await db.collection('auth').updateOne({email:keycheck.email},{$set:{password:hash}})
         res.send(`
         <center>
-        <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
+        <img src='https://tendercareschools.org/images/security.gif' alt='logo'/>
+        
+        <p>Password updated Successfully, Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click Here</a> to login</p>
         </center>
-        <p>Password updated Successfully, Please <a href="https://nostalgic-wozniak-8dd50b.netlify.app/">Click Here</a> to login</p>`)                   
+        `)                   
   }
   else{
         res.send(`
         <center>
-        <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
+        <img src='https://techcrunch.com/wp-content/uploads/2019/09/password.gif' alt='logo'/>
         </center>
         Key is invalid, please click forget password link again to generate new key
         `)
