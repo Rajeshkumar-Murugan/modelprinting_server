@@ -508,6 +508,7 @@ router.put('/reset-password', async(req, res)=>{
 
 router.post('/Message', async(req, res)=>{
   try{
+   
         var mailOptions = {
           from: req.body.email,
           to: 'testingforweb01@gmail.com',
@@ -529,6 +530,9 @@ router.post('/Message', async(req, res)=>{
               console.log(error);
             } else {
               console.log('Email sent: ' + info.response);
+              res.json({
+                message:"Message sent"
+              })
             }
           });
   } 
