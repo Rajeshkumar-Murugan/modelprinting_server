@@ -506,6 +506,38 @@ router.put('/reset-password', async(req, res)=>{
   }
 })
 
+router.post('/Message', async(req, res)=>{
+  try{
+        var mailOptions = {
+          from: req.body.email,
+          to: 'testingforweb01@gmail.com',
+          subject: 'Mail from client',
+          html: ` 
+          <center>
+          <p>Name: ${req.body.name}</p>
+          <p>Email: ${req.body.email}</p>
+          <p>Mobile: ${req.body.mobile}</p>
+          <p>Message: ${req.body.message}</p>
+          <p>Address: ${req.body.address}</p>
+
+          </center>
+          ` };
+        
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+  } 
+  catch (error) {
+    res.send(error);
+  }
+  
+})
+
 // Authcodes ends
 
 
