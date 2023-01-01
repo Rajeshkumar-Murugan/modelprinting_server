@@ -53,7 +53,7 @@ router.post('/register', async(req, res, next)=> {
         html: `
 
         <img src="https://cdn.dribbble.com/users/1238709/screenshots/4069900/success_celebration_800x600.gif"><br/>
-       <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
+       <a href ="https://modelprinting-server.onrender.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
        <br/>
        <b>Note: <b><p>Link will be valid only for 5mins</p>
         `                
@@ -98,7 +98,7 @@ router.post('/register', async(req, res, next)=> {
         html: `
 
         <img src="https://cdn.dribbble.com/users/1238709/screenshots/4069900/success_celebration_800x600.gif"><br/>
-       <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
+       <a href ="https://modelprinting-server.onrender.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
        <br/>
        <b>Note: <b><p>Link will be valid only for 5mins</p>
         `                
@@ -164,7 +164,7 @@ router.post('/login', async(req, res)=>{
           html: `
           <center>
           <img src="https://cdn.dribbble.com/users/1303437/screenshots/3690039/verify_400x300.gif"><br/>
-         <a href ="https://modelprintingserver.herokuapp.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
+         <a href ="https://modelprinting-server.onrender.com/users/verify-token/${token}" method="get">Click Here</a> to verify your account.
          <br/>
          <p><b>Note: </b>Link will be valid only for 5mins</p>
          </center>
@@ -253,7 +253,7 @@ router.post('/forget-password', async(req, res)=>{
            
             
             <p> Please  
-            <a href ="https://modelprintingserver.herokuapp.com/users/forget-password/link/${keyvalue}" method="get">Click Here</a> to set new password</p><br>
+            <a href ="https://modelprinting-server.onrender.com/users/forget-password/link/${keyvalue}" method="get">Click Here</a> to set new password</p><br>
             </center>
           ` };
         
@@ -382,7 +382,7 @@ router.get('/forget-password/link/:key', async(req, res)=>{
     </script>
 </head>
 <body>
-<form action="https://modelprintingserver.herokuapp.com/users/forget-password/update/${keys}", method="POST" style="max-width:500px;margin:auto">
+<form action="https://modelprinting-server.onrender.com/users/forget-password/update/${keys}", method="POST" style="max-width:500px;margin:auto">
 <center>
 <img src='https://mir-s3-cdn-cf.behance.net/project_modules/disp/a6468b24146609.56330c8f468d6.gif' alt='logo'/>
 </center>
